@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="pepe-div">
+    <img class="wine-pepe-img" src="wine-pepe.png" alt="">
+  </div>
+  <div class="punch-div">
+    <img class="punch-img" src="punch.png" alt="">
+  </div>
+
+  <div class="hit-board">
+    <span>hit count : </span><span class="hit-count">0</span>
+  </div>
+
+  <button class="punch-btn">
+    punch
+  </button>
+</body>
+<script>
+  let hitCount = 0;
+  let punchHit = false;
+
+  document.querySelector('.punch-btn')
+    .addEventListener('mousedown', () => {
+      console.log('hit!');
+
+      punchHit = true;
+
+      const punch = document.querySelector('.punch-img');
+      const style = getComputedStyle(punch);
+      const currentLeft = parseInt(style.left, 10);
+
+      punch.style.left = `${currentLeft + 390}px`;
+
+
+      const hitSound = new Audio('bbojic.mp3');
+      hitSound.play();
+
+      hitCount++;
+
+      const hitBoard = document.querySelector('.hit-count');
+      hitBoard.innerHTML = hitCount;
+
+      document.querySelector('.wine-pepe-img').src = 'pepe-cry.jpeg';
+    });
+
+  document.querySelector('.punch-btn')
+    .addEventListener('mouseup', mouseUpOrLeave);
+
+  document.querySelector('.punch-btn')
+    .addEventListener('mouseleave', mouseUpOrLeave);
+
+  function mouseUpOrLeave() {
+
+    if (punchHit) {
+      const punch = document.querySelector('.punch-img');
+      const style = getComputedStyle(punch);
+      const currentLeft = parseInt(style.left, 10);
+
+      punch.style.left = `${currentLeft - 390}px`;
+
+      punchHit = false;
+    }
+  }
+
+</script>
+<style>
+  .hit-board {
+    border: 1px solid red;
+    width: 200px;
+    height: 50px;
+    position: absolute;
+    top: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .wine-pepe-img {
+    width: 200px;
+    position: absolute;
+    left: 500px;
+  }
+
+  .punch-img {
+    width: 200px;
+    left: 0px;
+    position: absolute;
+  }
+
+  .punch-btn {
+    width: 200px;
+    height: 50px;
+    position: absolute;
+    padding-right: 100px;
+    left: 500px;
+    top: 300px;
+  }
+</style>
+
+</html>
